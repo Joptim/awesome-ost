@@ -1,0 +1,5 @@
+╔════════╗
+║Spacebar║
+╚════════╝
+ Play/Stop
+  tracks
