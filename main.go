@@ -1,6 +1,14 @@
 package main
 
-/*func main() {
+import (
+	"fmt"
+	"github.com/awesome-gocui/gocui"
+	"github.com/joptim/awesome-ost/frontend/scenes/mixer/manager"
+	"github.com/pkg/errors"
+	"log"
+)
+
+func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal, true)
 	if err != nil {
 		panic(err)
@@ -23,9 +31,9 @@ package main
 
 func quit(g *gocui.Gui, v *gocui.View) error {
 	return gocui.ErrQuit
-}*/
+}
 
-import (
+/*import (
 	"github.com/joptim/awesome-ost/backend/server"
 	"log"
 )
@@ -33,3 +41,4 @@ import (
 func main() {
 	log.Fatalln(server.New().ListenAndServe(":8000"))
 }
+*/

@@ -10,7 +10,10 @@ import (
 	"github.com/joptim/awesome-ost/frontend/components/wrappers/asciiart"
 )
 
-func Layout(gui *gocui.Gui) error {
+type Manager struct {
+}
+
+func (m *Manager) Layout(gui *gocui.Gui) error {
 	navbarLayout := CreateHorizontalNavbar(gui)
 	//tracksLayout := CreateControlTrackList(gui)
 	navigateLayout := CreateControlsMenu(gui)
@@ -28,7 +31,7 @@ func Layout(gui *gocui.Gui) error {
 	return vLayout.Render()
 }
 
-func CreateHorizontalNavbar(gui *gocui.Gui) *horizontal.Horizontal {
+func (m *Manager) CreateHorizontalNavbar(gui *gocui.Gui) *horizontal.Horizontal {
 	x, y := gui.Size()
 	hLayout := horizontal.New()
 	hLayout.SetDimensions(0, 0, x, y)
@@ -47,7 +50,17 @@ func CreateHorizontalNavbar(gui *gocui.Gui) *horizontal.Horizontal {
 	return hLayout
 }
 
-func CreateControlsMenu(gui *gocui.Gui) *horizontal.Horizontal {
+func (m *Manager) CreateNavBarItem(text string, gui *gocui.Gui) *wrappers.View {
+	wrapper := wrappers.GetView(fmt.Sprintf("navbar_%s", text), gui)
+	view := wrapper.GetView()
+	view.Frame = true
+	view.FrameRunes = []rune{'═', '║', '╔', '╗', '╚', '╝', '╠', '╣', '╦', '╩', '╬'}
+	view.Clear()
+	view.Write([]byte(text))
+	return wrapper
+}
+
+func (m *Manager) CreateControlsMenu(gui *gocui.Gui) *horizontal.Horizontal {
 	x, y := gui.Size()
 	hLayout := horizontal.New()
 	hLayout.SetDimensions(0, 0, x, y)
@@ -63,31 +76,25 @@ func CreateControlsMenu(gui *gocui.Gui) *horizontal.Horizontal {
 	return hLayout
 }
 
-func CreateNavBarItem(text string, gui *gocui.Gui) *wrappers.View {
-	wrapper := wrappers.GetView(fmt.Sprintf("navbar_%s", text), gui)
-	view := wrapper.GetView()
-	view.Frame = true
-	view.FrameRunes = []rune{'═', '║', '╔', '╗', '╚', '╝', '╠', '╣', '╦', '╩', '╬'}
-	view.Clear()
-	view.Write([]byte(text))
-	return wrapper
-}
-
-func CreateControlNavigateKeysItem(gui *gocui.Gui) *asciiart.View {
+func (m *Manager) CreateControlNavigateKeysItem(gui *gocui.Gui) *asciiart.View {
 	wrapper := asciiart.GetView(asciiart.KEYS, "arrow_keys", gui)
 	view := wrapper.GetView()
 	view.Frame = true
 	return wrapper
 }
 
-func CreateControlSelectItem(gui *gocui.Gui) *asciiart.View {
+func (m *Manager) CreateControlSelectItem(gui *gocui.Gui) *asciiart.View {
 	wrapper := asciiart.GetView(asciiart.ENTERKEY, "select_keys", gui)
 	wrapper.GetView().Frame = true
 	return wrapper
 }
 
-func CreateControlPlayItem(gui *gocui.Gui) *asciiart.View {
+func (m *Manager) CreateControlPlayItem(gui *gocui.Gui) *asciiart.View {
 	wrapper := asciiart.GetView(asciiart.SPACEBARKEY, "play_keys", gui)
 	wrapper.GetView().Frame = true
 	return wrapper
+}
+
+func (m *Manager) CreateControlTrackList(gui *gocui.Gui) *horizontal.Horizontal {
+	return nil
 }
